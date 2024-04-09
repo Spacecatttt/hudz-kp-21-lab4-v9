@@ -1,7 +1,4 @@
-using RabbitMQ.Client;
-
 namespace Server {
-
   public class Program {
     public static void Main(string[] args) {
       var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +6,7 @@ namespace Server {
       builder.Services.AddControllers();
       builder.Services.AddEndpointsApiExplorer();
       builder.Services.AddSwaggerGen();
+
     
       var app = builder.Build();
       if (app.Environment.IsDevelopment())

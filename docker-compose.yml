@@ -8,8 +8,8 @@ services:
       - "5672:5672"
       - "15672:15672"
     environment:
-      RABBITMQ_DEFAULT_USER: guest
-      RABBITMQ_DEFAULT_PASS: guest
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: hdmsfs23_k!vs
     networks:
       - app-network
 
@@ -28,8 +28,8 @@ services:
 
   weatherworker:
     build: 
-      context: ./WeatherWorker
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: WeatherWorker/Dockerfile
     depends_on:
       - rabbitmq
     networks:
@@ -37,8 +37,8 @@ services:
 
   foodworker:
     build: 
-      context: ./FoodWorker
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: FoodWorker/Dockerfile
     depends_on:
       - rabbitmq
     networks:

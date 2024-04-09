@@ -11,7 +11,14 @@ namespace hudz_kp_21_lab4_v9.Controllers {
     private readonly IBus _busControl;
     public GetReceiverFood(ILogger<GetReceiverWeather> logger) {
       _logger = logger;
-      _busControl = RabbitHutch.CreateBus("localhost", "food_topic", ExchangeType.Topic);
+
+      // read config
+      var config = ReadConfig.ReadRabbitConfig();
+
+      _busControl = RabbitHutch.CreateBus(
+      config["HOST_RABBITMQ"], "food_topic", ExchangeType.Topic,
+      Convert.ToUInt16(config["PORT_RABBITMQ"]),
+      config["RABBITMQ_DEFAULT_USER"], config["RABBITMQ_DEFAULT_PASS"]);
     }
 
     [HttpGet("food.Italian")]

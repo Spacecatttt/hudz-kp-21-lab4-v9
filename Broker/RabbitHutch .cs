@@ -33,12 +33,13 @@ namespace hudz_kp_21_lab4_v9.RabbitMq {
       string hostName, string exchangeName, string exchangeType,
       ushort hostPort, string username, string password) {
       _factory = new ConnectionFactory {
-        HostName = hostName,
-        Port = hostPort,
-        UserName = username,
-        Password = password,
+        HostName = "rabbitmq",//hostName,
+        Port = 5672,//hostPort,
+        UserName = "user",//username,
+        Password = "hdmsfs23_k!vs",//password,
         DispatchConsumersAsync = true
       };
+      //_factory.Uri = new Uri($"amqp://user:hdmsfs23_k!vs@rabbitmq:5672/");
       _connection = _factory.CreateConnection();
       _channel = _connection.CreateModel();
       return new RabbitBus(_channel, exchangeName, exchangeType);
