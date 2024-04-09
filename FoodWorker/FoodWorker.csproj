@@ -9,7 +9,9 @@
 
   <ItemGroup>
     <PackageReference Include="RabbitMQ.Client" Version="6.8.1" />
-    <PackageReference Include="System.Text.Json" Version="8.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
-
+  <ItemGroup>
+    <ProjectReference Include="..\Broker\Broker.csproj" />
+  </ItemGroup>
 </Project>
