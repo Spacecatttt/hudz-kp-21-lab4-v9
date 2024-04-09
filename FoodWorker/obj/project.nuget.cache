@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "8JXbD7qFP+IjLND18ypXc5Tf02jPJ5QMRfQDcQJQ1Ifoy8ZQ1n5LHhCXAX2TsOwnWLScqoRAZFQmayAES1S/Rw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\T480\\source\\repos\\hudz-kp-21-lab4-v9\\FoodWorker\\FoodWorker.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\T480\\.nuget\\packages\\rabbitmq.client\\6.8.1\\rabbitmq.client.6.8.1.nupkg.sha512",
+    "C:\\Users\\T480\\.nuget\\packages\\system.memory\\4.5.5\\system.memory.4.5.5.nupkg.sha512",
+    "C:\\Users\\T480\\.nuget\\packages\\system.text.encodings.web\\8.0.0\\system.text.encodings.web.8.0.0.nupkg.sha512",
+    "C:\\Users\\T480\\.nuget\\packages\\system.text.json\\8.0.3\\system.text.json.8.0.3.nupkg.sha512",
+    "C:\\Users\\T480\\.nuget\\packages\\system.threading.channels\\7.0.0\\system.threading.channels.7.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
