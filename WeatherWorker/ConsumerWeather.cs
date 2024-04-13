@@ -1,16 +1,6 @@
 ﻿using hudz_kp_21_lab4_v9.RabbitMq;
-using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Intrinsics.X86;
-using System.Text;
-using System.Threading.Channels;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
-namespace hudz_kp_21_lab4_v9_1 {
+namespace WeatherWorker {
   public class ConsumerWeather {
     private readonly IBus _busControl;
     public ConsumerWeather(IBus busControl) {
