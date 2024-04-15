@@ -13,8 +13,7 @@ namespace hudz_kp_21_lab4_v9.RabbitMq {
 
     public static IBus CreateBus(string hostName) {
       _factory = new ConnectionFactory {
-        HostName = hostName,
-        DispatchConsumersAsync = true
+        HostName = hostName
       };
       _connection = _factory.CreateConnection();
       _channel = _connection.CreateModel();
@@ -22,8 +21,7 @@ namespace hudz_kp_21_lab4_v9.RabbitMq {
     }
     public static IBus CreateBus(string hostName, string exchangeName, string exchangeType) {
       _factory = new ConnectionFactory {
-        HostName = hostName,
-        DispatchConsumersAsync = true
+        HostName = hostName
       };
       _connection = _factory.CreateConnection();
       _channel = _connection.CreateModel();
@@ -36,10 +34,8 @@ namespace hudz_kp_21_lab4_v9.RabbitMq {
         HostName = hostName,
         Port = hostPort,
         UserName = username,
-        Password = password,
-        DispatchConsumersAsync = true
+        Password = password
       };
-      //_factory.Uri = new Uri($"amqp://user:hdmsfs23_k!vs@rabbitmq:5672/");
       _factory.Uri = new Uri($"amqp://{username}:{password}@{hostName}:{hostPort}/");
       _connection = _factory.CreateConnection();
       _channel = _connection.CreateModel();

@@ -26,12 +26,12 @@ namespace hudz_kp_21_lab4_v9.Controllers {
     }
 
     [HttpPost("{route}")]
-    async public Task<IActionResult> SendMessage(
+    public IActionResult SendMessage(
         [FromRoute] string route,
         [FromBody] string message
     ) {
       try {
-        await _busControl.SendAsync(route, message);
+        _busControl.Send(route, message);
         return Ok($"Sent message to {route}");
       }
       catch (Exception ex) {

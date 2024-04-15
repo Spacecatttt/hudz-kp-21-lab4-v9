@@ -7,29 +7,31 @@ namespace WeatherWorker {
     static void Main(string[] args) {
       var config = ReadConfig.ReadRabbitConfig();
 
-      IBus bus = AttemptRabbitMQConnection(config);
-
+      IBus? bus = AttemptRabbitMQConnection(config);
+      if(bus is null){
+        System.Console.WriteLine($"Connection to RabbitMq failed. Exit from program.");
+        return;
+      }
       var queueRoutingKeyPairs = new List<(string, string)>
       {
-                ("weather_us_west", "weather:us:west"),
-                ("weather_us_east", "weather:us:east"),
-                ("weather_uk", "weather:uk"),
-                ("weather_world", "weather:world"),
-                ("weather_us_west", "weather:us"),
-                ("weather_us_east", "weather:us"),
-            };
+        ("weather_us_west", "weather:us:west"),
+        ("weather_us_east", "weather:us:east"),
+        ("weather_uk", "weather:uk"),
+        ("weather_world", "weather:world"),
+        ("weather_us_west", "weather:us"),
+        ("weather_us_east", "weather:us"),
+      };
 
       bus.BindQueuesToRoutingKeys(queueRoutingKeyPairs);
 
-      ConsumerWeather consumer = new ConsumerWeather(bus);
+      new ConsumerWeather(bus);
 
       Console.WriteLine(" [*] Waiting for messages. Press enter to end");
       Console.ReadLine();
-      while (true)
-        ;
+      while (true) ;
     }
 
-    static IBus AttemptRabbitMQConnection(Dictionary<string, string> config) {
+    static IBus? AttemptRabbitMQConnection(Dictionary<string, string> config) {
       int retries = 10;
       int retryIntervalSeconds = 10;
       for (int i = 0; i < retries; i++) {

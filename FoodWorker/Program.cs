@@ -1,21 +1,26 @@
 ﻿using hudz_kp_21_lab4_v9.RabbitMq;
 using RabbitMQ.Client;
-using System.Threading.Channels;
 
 namespace FoodWorker {
   internal class Program {
     static void Main(string[] args) {
       var config = ReadConfig.ReadRabbitConfig();
 
-      IBus bus = AttemptRabbitMQConnection(config);
+      IBus? bus = AttemptRabbitMQConnection(config);
+      if(bus is null){
+        System.Console.WriteLine($"Connection to RabbitMq failed. Exit from program.");
+        return;
+      }
 
-      ConsumerFood consumer = new ConsumerFood(bus);
       var queueRoutingKeyPairs = new List<(string, string)>{
         ("italian_food","food.italian" ),
         ("ukrainian_food", "food.ukrainian" ),
         ("mexican_food", "food.mexican"),
       };
+
       bus.BindQueuesToRoutingKeys(queueRoutingKeyPairs);
+
+      new ConsumerFood(bus);
 
       Console.WriteLine(" [*] Waiting for messages. Press enter to end");
       Console.ReadLine();
@@ -23,7 +28,7 @@ namespace FoodWorker {
       while (true) ;
     }
 
-    static IBus AttemptRabbitMQConnection(Dictionary<string, string> config) {
+    static IBus? AttemptRabbitMQConnection(Dictionary<string, string> config) {
       int retries = 10;
       int retryIntervalSeconds = 10;
       for (int i = 0; i < retries; i++) {
@@ -31,8 +36,8 @@ namespace FoodWorker {
           Console.WriteLine("Attempting connection...");
           IBus bus = RabbitHutch.CreateBus(
               config["HOST_RABBITMQ"],
-              "weather_direct",
-              ExchangeType.Direct,
+              "food_topic",
+              ExchangeType.Topic,
               Convert.ToUInt16(config["PORT_RABBITMQ"]),
               config["RABBITMQ_DEFAULT_USER"],
               config["RABBITMQ_DEFAULT_PASS"]

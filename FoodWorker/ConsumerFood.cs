@@ -14,26 +14,26 @@ namespace FoodWorker {
     }
 
     public void Binding() {
-      _busControl.ReceiveAsync<string>("italian_food", ReceiveFoodItalian);
-      _busControl.ReceiveAsync<string>("ukrainian_food", ReceiveFoodUkrainian);
-      _busControl.ReceiveAsync<string>("mexican_food", ReceiveFoodMexican);
+      _busControl.Receive<string>("italian_food", ReceiveFoodItalian);
+      _busControl.Receive<string>("ukrainian_food", ReceiveFoodUkrainian);
+      _busControl.Receive<string>("mexican_food", ReceiveFoodMexican);
     }
 
-    async public void ReceiveFoodItalian<T>(T message) {
-      await Log($"Received message (italian.food): {message.ToString()}");
+    public void ReceiveFoodItalian<T>(T message) {
+      Log($"Received message (italian.food): {message.ToString()}");
     }
 
-    async public void ReceiveFoodUkrainian<T>(T message) {
-      await Log($"Received message (ukrainian.food): {message.ToString()}");
+    public void ReceiveFoodUkrainian<T>(T message) {
+      Log($"Received message (ukrainian.food): {message.ToString()}");
     }
 
-    async public void ReceiveFoodMexican<T>(T message) {
-      await Log($"Received message (mexican.food): {message.ToString()}");
+    public void ReceiveFoodMexican<T>(T message) {
+      Log($"Received message (mexican.food): {message.ToString()}");
     }
-    async public Task Log(string message) {
+    public void Log(string message) {
       string id = Guid.NewGuid().ToString();
       string timestamp = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ");
-      await Console.Out.WriteLineAsync($"{id} {timestamp} {message}");
+      Console.WriteLine($"{id} {timestamp} {message}");
     }
   }
 }
