@@ -25,5 +25,4 @@ RUN dotnet publish "Server.csproj" -c Release -o /app/publish /p:UseAppHost=fals
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-COPY ["Broker/rabbitSetting.json", "Broker/rabbitSetting.json"]
 ENTRYPOINT ["dotnet", "Server.dll"]

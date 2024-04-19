@@ -1,4 +1,5 @@
 ﻿using hudz_kp_21_lab4_v9.RabbitMq;
+using Model;
 
 namespace WeatherWorker {
   public class ConsumerWeather {
@@ -9,32 +10,28 @@ namespace WeatherWorker {
     }
 
     public void Binding() {
-      _busControl.Receive<string>("weather_us_west", ReceiveWeatherUsWest);
-      _busControl.Receive<string>("weather_us_east", ReceiveWeatherUsEast);
-      _busControl.Receive<string>("weather_uk", ReceiveWeatherUK);
-      _busControl.Receive<string>("weather_world", ReceiveWeatherWorld);
+      _busControl.Receive<WeatherRequest>("weather_us_west", ReceiveWeatherUsWest);
+      _busControl.Receive<WeatherRequest>("weather_us_east", ReceiveWeatherUsEast);
+      _busControl.Receive<WeatherRequest>("weather_uk", ReceiveWeatherUK);
+      _busControl.Receive<WeatherRequest>("weather_world", ReceiveWeatherWorld);
     }
 
-    public void ReceiveWeatherUsWest<T>(T message) {
-      Log($"Received message (weather:us:west): {message?.ToString()}");
+    public void ReceiveWeatherUsWest(WeatherRequest message) {
+
+      Console.WriteLine($"{message.Uuid} : {message.DateTimeStamp}: In us-west min. temprature = {message.MinTemperature}, max. temprature = {message.MaxTemperature}");
     }
 
-    public void ReceiveWeatherUsEast<T>(T message) {
-      Log($"Received message (weather:us:east): {message?.ToString()}");
+    public void ReceiveWeatherUsEast(WeatherRequest message) {
+      Console.WriteLine($"{message.Uuid} : {message.DateTimeStamp}: In us-east min. temprature = {message.MinTemperature}, max. temprature = {message.MaxTemperature}");
     }
 
-    public void ReceiveWeatherUK<T>(T message) {
-      Log($"Received message (weather:uk): {message?.ToString()}");
+    public void ReceiveWeatherUK(WeatherRequest message) {
+      Console.WriteLine($"{message.Uuid} : {message.DateTimeStamp}: In uk min. temprature = {message.MinTemperature}, max. temprature = {message.MaxTemperature}");
     }
 
-    public void ReceiveWeatherWorld<T>(T message) {
-      Log($"Received message (weather:world): {message?.ToString()}");
+    public void ReceiveWeatherWorld(WeatherRequest message) {
+      Console.WriteLine($"{message.Uuid} : {message.DateTimeStamp}: In world min. temprature = {message.MinTemperature}, max. temprature = {message.MaxTemperature}");
     }
 
-    public void Log(string message) {
-      string id = Guid.NewGuid().ToString();
-      string timestamp = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ");
-      Console.WriteLine($"{id} {timestamp} {message}");
-    }
   }
 }

@@ -16,5 +16,4 @@ RUN dotnet publish "./FoodWorker.csproj" -c Release -o /app/publish /p:UseAppHos
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-COPY ["Broker/rabbitSetting.json", "Broker/rabbitSetting.json"]
 ENTRYPOINT ["dotnet", "FoodWorker.dll"]

@@ -4,9 +4,7 @@ using RabbitMQ.Client;
 namespace FoodWorker {
   internal class Program {
     static void Main(string[] args) {
-      var config = ReadConfig.ReadRabbitConfig();
-
-      IBus? bus = AttemptRabbitMQConnection(config);
+      IBus? bus = AttemptRabbitMQConnection();
       if(bus is null){
         System.Console.WriteLine($"Connection to RabbitMq failed. Exit from program.");
         return;
@@ -28,19 +26,19 @@ namespace FoodWorker {
       while (true) ;
     }
 
-    static IBus? AttemptRabbitMQConnection(Dictionary<string, string> config) {
+    static IBus? AttemptRabbitMQConnection() {
       int retries = 10;
       int retryIntervalSeconds = 10;
       for (int i = 0; i < retries; i++) {
         try {
           Console.WriteLine("Attempting connection...");
           IBus bus = RabbitHutch.CreateBus(
-              config["HOST_RABBITMQ"],
-              "food_topic",
-              ExchangeType.Topic,
-              Convert.ToUInt16(config["PORT_RABBITMQ"]),
-              config["RABBITMQ_DEFAULT_USER"],
-              config["RABBITMQ_DEFAULT_PASS"]
+            Environment.GetEnvironmentVariable("RABBITMQ_HOST")!,
+            "food_topic",
+            ExchangeType.Topic,
+            ushort.Parse(Environment.GetEnvironmentVariable("RABBITMQ_PORT")!),
+            Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_USER")!,
+            Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_PASS")!
           );
 
           Console.WriteLine("Connection successful!");

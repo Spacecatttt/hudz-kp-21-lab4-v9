@@ -1,9 +1,5 @@
 ﻿using hudz_kp_21_lab4_v9.RabbitMq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Model;
 
 namespace FoodWorker {
   internal class ConsumerFood {
@@ -14,26 +10,21 @@ namespace FoodWorker {
     }
 
     public void Binding() {
-      _busControl.Receive<string>("italian_food", ReceiveFoodItalian);
-      _busControl.Receive<string>("ukrainian_food", ReceiveFoodUkrainian);
-      _busControl.Receive<string>("mexican_food", ReceiveFoodMexican);
+      _busControl.Receive<FoodRequest>("italian_food", ReceiveFoodItalian);
+      _busControl.Receive<FoodRequest>("ukrainian_food", ReceiveFoodUkrainian);
+      _busControl.Receive<FoodRequest>("mexican_food", ReceiveFoodMexican);
     }
 
-    public void ReceiveFoodItalian<T>(T message) {
-      Log($"Received message (italian.food): {message.ToString()}");
+    public void ReceiveFoodItalian(FoodRequest message) {
+      Console.WriteLine($"{message.Uuid} : {message.DateTimeStamp}: The name of the dish in Italian cuisine - {message.Name}, descripion - {message.Description}");
     }
 
-    public void ReceiveFoodUkrainian<T>(T message) {
-      Log($"Received message (ukrainian.food): {message.ToString()}");
+    public void ReceiveFoodUkrainian(FoodRequest message) {
+      Console.WriteLine($"{message.Uuid} : {message.DateTimeStamp}: The name of the dish in Ukrainian cuisine - {message.Name}, descripion - {message.Description}");
     }
 
-    public void ReceiveFoodMexican<T>(T message) {
-      Log($"Received message (mexican.food): {message.ToString()}");
-    }
-    public void Log(string message) {
-      string id = Guid.NewGuid().ToString();
-      string timestamp = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ");
-      Console.WriteLine($"{id} {timestamp} {message}");
+    public void ReceiveFoodMexican(FoodRequest message) {
+      Console.WriteLine($"{message.Uuid} : {message.DateTimeStamp}: The name of the dish in Mexican cuisine - {message.Name}, descripion - {message.Description}");
     }
   }
 }

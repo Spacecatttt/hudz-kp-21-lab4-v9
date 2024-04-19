@@ -1,3 +1,7 @@
 {
   "editor.tabSize": 2,
+  "csharp.format.enable": false,
+  "csharp.inlayHints.enableInlayHintsForImplicitVariableTypes": true,
+  "csharp.inlayHints.enableInlayHintsForLambdaParameterTypes": true,
+  "dotnet.inlayHints.suppressInlayHintsForParametersThatMatchArgumentName": true,
 }

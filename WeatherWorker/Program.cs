@@ -1,14 +1,14 @@
-﻿using System.Runtime.InteropServices;
+using System.Runtime.InteropServices;
 using hudz_kp_21_lab4_v9.RabbitMq;
 using RabbitMQ.Client;
 
 namespace WeatherWorker {
   internal class Program {
     static void Main(string[] args) {
-      var config = ReadConfig.ReadRabbitConfig();
+      //var config = ReadConfig.ReadRabbitConfig();
 
-      IBus? bus = AttemptRabbitMQConnection(config);
-      if(bus is null){
+      IBus? bus = AttemptRabbitMQConnection();
+      if (bus is null) {
         System.Console.WriteLine($"Connection to RabbitMq failed. Exit from program.");
         return;
       }
@@ -31,19 +31,19 @@ namespace WeatherWorker {
       while (true) ;
     }
 
-    static IBus? AttemptRabbitMQConnection(Dictionary<string, string> config) {
+    static IBus? AttemptRabbitMQConnection() {
       int retries = 10;
       int retryIntervalSeconds = 10;
       for (int i = 0; i < retries; i++) {
         try {
           Console.WriteLine("Attempting connection...");
           IBus bus = RabbitHutch.CreateBus(
-              config["HOST_RABBITMQ"],
-              "weather_direct",
-              ExchangeType.Direct,
-              Convert.ToUInt16(config["PORT_RABBITMQ"]),
-              config["RABBITMQ_DEFAULT_USER"],
-              config["RABBITMQ_DEFAULT_PASS"]
+            Environment.GetEnvironmentVariable("RABBITMQ_HOST")!,
+            "weather_direct",
+            ExchangeType.Direct,
+            ushort.Parse(Environment.GetEnvironmentVariable("RABBITMQ_PORT")!),
+            Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_USER")!,
+            Environment.GetEnvironmentVariable("RABBITMQ_DEFAULT_PASS")!
           );
 
           Console.WriteLine("Connection successful!");

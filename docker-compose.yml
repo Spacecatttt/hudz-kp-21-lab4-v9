@@ -11,6 +11,12 @@ services:
       RABBITMQ_DEFAULT_PASS: hdmsfs23_k!vs
     networks:
       - app-network
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
   server:
     build:
@@ -20,7 +26,12 @@ services:
       - "5041:80"
     restart: on-failure
     depends_on:
-      - rabbitmq
+      rabbitmq:
+        condition: 
+          service_healthy
+    env_file:
+      - path: ./rabbitmq.env
+        required: true
     networks:
       - app-network
 
@@ -29,7 +40,12 @@ services:
       context: .
       dockerfile: WeatherWorker/Dockerfile
     depends_on:
-      - rabbitmq
+      rabbitmq:
+        condition: 
+          service_healthy
+    env_file:
+      - path: ./rabbitmq.env
+        required: true
     networks:
       - app-network
 
@@ -38,7 +54,12 @@ services:
       context: .
       dockerfile: FoodWorker/Dockerfile
     depends_on:
-      - rabbitmq
+      rabbitmq:
+        condition: 
+          service_healthy
+    env_file:
+      - path: ./rabbitmq.env
+        required: true
     networks:
       - app-network
 

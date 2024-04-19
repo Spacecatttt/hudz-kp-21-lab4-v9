@@ -16,5 +16,4 @@ RUN dotnet publish "./WeatherWorker.csproj" -c Release -o /app/publish /p:UseApp
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-COPY ["Broker/rabbitSetting.json", "Broker/rabbitSetting.json"]
 ENTRYPOINT ["dotnet", "WeatherWorker.dll"]

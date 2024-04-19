@@ -1,7 +1,0 @@
-{
-    "RABBITMQ_DEFAULT_USER": "user",
-    "RABBITMQ_DEFAULT_PASS": "hdmsfs23_k!vs",
-    "HOST_RABBITMQ": "rabbitmq",
-    "PORT_RABBITMQ": "5672"
-  }
-  
